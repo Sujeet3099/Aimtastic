@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Its a game for reaction time</title>
+</head>
+
+<body>
+    <style>
+        #aimObject {
+            background-color: red;
+            height: 200px;
+            width: 200px;
+            display: none;
+            position: relative;
+        }
+    </style>
+
+    <p>Your time : <span id="timeTaken"></span></p>
+
+    <div id="aimObject"></div>
+
+    <script>
+        var startTime = new Date().getTime();
+
+        function generateRandomColor() {
+            var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+            return randomColor;
+            //random color will be freshly served
+        }
+
+        function reAppear() {
+            var top = Math.random() * 400;
+            var left = Math.random() * 400;
+            var width = (Math.random() * 200)+100;
+            if(Math.random()>0.5){
+                document.getElementById("aimObject").style.borderRadius="50%";
+            }else{
+                document.getElementById("aimObject").style.borderRadius="0%";
+            }
+            document.getElementById("aimObject").style.top = top + "px";
+            document.getElementById("aimObject").style.left = left + "px";
+            document.getElementById("aimObject").style.width = width + "px";
+            document.getElementById("aimObject").style.height = width + "px";
+             document.getElementById("aimObject").style.backgroundColor = generateRandomColor();            document.getElementById("aimObject").style.display = "block";
+            startTime = new Date().getTime();
+        }
+
+        function appearAfterDelay() {
+            setTimeout(reAppear, Math.random() * 1000);
+        }
+
+        appearAfterDelay();
+
+        document.getElementById("aimObject").onclick = function() {
+            document.getElementById("aimObject").style.display = "none";
+            var endTime = new Date().getTime();
+            var timeTaken = (endTime - startTime) / 1000;
+            document.getElementById("timeTaken").innerHTML = timeTaken + "s";
+            appearAfterDelay();
+        }
+    </script>
+</body></html>
